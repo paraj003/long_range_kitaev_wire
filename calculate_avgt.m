@@ -16,7 +16,7 @@ function ms=calculate_avgt(Ns, Bs, J,narr, x, w)
         end
         mdata=ms(j,:,:);
         N=Ns(j);
-        filename=sprintf('data/Avg_mag_N_%G_t_%G:%G:%G_Bs%G:%G.mat',Ns(j),x(1),x(2)-x(1),x(end),Bs(1),Bs(end))
+        filename=sprintf('data/Avg_mag_N_%G_t_%G:%G:%G_Bs%G:%G:%G.mat',Ns(j),x(1),x(2)-x(1),x(end),Bs(1),(Bs(end)-Bs(1))/(length(Bs)-1),Bs(end))
         save(filename,'x','w','N','Bs','J','narr','mdata')
     end
 end

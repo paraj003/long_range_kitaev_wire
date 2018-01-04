@@ -10,17 +10,16 @@ function avg_magt = avg_G_per_turbo(m_even, m_odd,narr,x,w)
     avg_mag=zeros(length(narr));
     %I will avoid doing both bc because i know that it is the same value.
     %and just take twice the value
-    for bc=1:1
+    for bc=1:2
         eta=etaarr(bc);
         [Udag, D] = eig(m{bc}); U = ctranspose(Udag);
         fprintf("Diagonalized eta=%d\n",eta)
         N = length(D) / 2;
-        %define different correlation matrices (i have flipped signs of
-        %eta from Joe's notes. Seems to make the answer better agree.
-        AiAj=1/8*(zeros(N)+diag(-ones(N-1,1),1)+diag(ones(N-1,1),-1)+diag(eta,N-1)+diag(-eta,-N+1));
-        AiAjd=1/8*(zeros(N)+diag(2*ones(N,1))+diag(-ones(N-1,1),1)+diag(-ones(N-1,1),-1)+diag(-eta,N-1)+diag(-eta,-N+1));
-        AidAj=1/8*(zeros(N)+diag(2*ones(N,1))+diag(ones(N-1,1),1)+diag(ones(N-1,1),-1)+diag(eta,N-1)+diag(eta,-N+1));
-        AidAjd=1/8*(zeros(N)+diag(ones(N-1,1),1)+diag(-ones(N-1,1),-1)+diag(-eta,N-1)+diag(eta,-N+1));
+        %define different correlation matrices (i will use the sign notation from Joe's notes.
+        AiAj=1/8*(zeros(N)+diag(-ones(N-1,1),1)+diag(ones(N-1,1),-1)+diag(-eta,N-1)+diag(eta,-N+1));
+        AiAjd=1/8*(zeros(N)+diag(2*ones(N,1))+diag(-ones(N-1,1),1)+diag(-ones(N-1,1),-1)+diag(eta,N-1)+diag(eta,-N+1));
+        AidAj=1/8*(zeros(N)+diag(2*ones(N,1))+diag(ones(N-1,1),1)+diag(ones(N-1,1),-1)+diag(-eta,N-1)+diag(-eta,-N+1));
+        AidAjd=1/8*(zeros(N)+diag(ones(N-1,1),1)+diag(-ones(N-1,1),-1)+diag(eta,N-1)+diag(-eta,-N+1));
         %time dependence
         odd=[1:2:2*N];
         even=[2:2:2*N];
@@ -73,7 +72,7 @@ function avg_magt = avg_G_per_turbo(m_even, m_odd,narr,x,w)
             %fprintf("mag(t)=%d\n",mag(bc,n))
         end
     end
-    mag(2,:)=mag(1,:); % use this line to avoid doing both odd and even parts.
+    %mag(2,:)=mag(1,:); % use this line to avoid doing both odd and even parts.
     %figure()
     %plot(x, squeeze(mag(bc,:)))
 
